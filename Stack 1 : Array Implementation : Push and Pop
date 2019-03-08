@@ -1,0 +1,43 @@
+//Consider implementing a fixed size stack of maximum size 5 using an array.
+#include<stdio.h>
+#include<stdlib.h>
+struct stack {
+int a[5];
+int top;
+};
+void initstack(struct stack *p){
+    p->top = -1;
+}
+void push(struct stack *p,int item){
+    if(p->top == 4){
+        printf("Stack is full\n");
+    }
+    else{
+        p->top++;
+        p->a[p->top] = item;
+    }
+}
+int pop(struct stack *p){
+    if(p->top == -1){
+        printf("Stack is empty\n");
+        return -1000;
+    }
+    else{
+        int t = p->a[p->top];
+        (p->top)--;
+        return t;
+    }
+}
+void display(struct stack p){
+     int i,n=p.top;
+     if(p.top==-1){
+         printf(" {}");
+     }
+     else
+     for(i=0;i <=n;i++){
+         printf(" %d",p.a[i]);
+     }
+}
+int main(){
+    struct stack s;
+    int choice,t;
