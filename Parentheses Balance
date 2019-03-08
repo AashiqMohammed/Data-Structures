@@ -1,0 +1,81 @@
+You are given a string consisting of parentheses () and []. A string of this type is said to be correct:
+(a) if it is the empty string
+(b) if A and B are correct, AB is correct,
+(c) if A is correct, (A) and [A] is correct.
+Write a program that takes a sequence of strings of this type and check their correctness. Your program can assume that the maximum string length is 128.
+Consider implementing a dynamically sized stack using an array.
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct stack
+{
+  char *s;
+  int top;
+};
+
+void initstack(struct stack * p);
+void push(struct stack *p, char item);
+char pop(struct stack *p);
+void balancedornot(struct stack p, char *par);
+
+void initstack(struct stack * p)
+{
+ p->top = -1;
+ p->s = (char*)malloc(128*sizeof(char));
+}
+void push(struct stack *p,char c){
+ p->top++;
+ p->s[p->top] = c;
+}
+ 
+char pop(struct stack *p){
+   char c=p->s[p->top];
+   p->top--;
+   return c;
+}
+
+void balancedornot(struct stack p, char *par)
+{
+    int i;
+    initstack(&p);
+    //char c;
+   for(i=0;par[i]!='\0';i++){
+       if((par[i]==')' && p.top == -1) || (par[i]==']' && p.top == -1)){
+           printf("\nNo");
+           return;
+       }
+       else if(par[i]=='(' || par[i]=='['){
+           push(&p,par[i]);
+       }
+       else if(par[i]==')' || par[i]==']'){
+           if((par[i]==')' && p.s[p.top]=='(') || (par[i]==']' && p.s[p.top]=='['))
+           pop(&p);
+           
+           else{
+               push(&p,par[i]);
+           }
+       }
+   }
+   if(p.top==-1){
+       printf("\nYes");
+   }
+   else {
+       printf("\nNo");
+   }
+}
+int main(){
+    int n;
+  struct stack p;
+  
+    char par[50];
+    scanf("%d", &n); 
+    getchar();
+    while (n--){        
+        scanf("%s",par);
+        balancedornot(p,par);
+    }
+  return 0;
+}
