@@ -1,0 +1,79 @@
+//Consider implementing a dynamically sized stack using an array.
+#include<stdio.h>
+#include<stdlib.h>
+struct stack
+{
+int *a;
+int top;
+int maxSize;
+};
+void initstack(struct stack *p,int maxSize){
+    p->top = -1;
+    p->a = (int*)malloc(maxSize*sizeof(int));
+    p->maxSize = maxSize;
+}
+void push(struct stack * p, int item){
+    if((p->top) == (p->maxSize)-1){
+        printf("Stack is full\n");
+    }
+    else{
+        p->top++;
+        p->a[p->top]=item;
+    }
+}
+int pop(struct stack *p){
+    if(p->top == -1){
+        printf("Stack is empty\n");
+        return -1000;
+    }
+    else{
+        int t = p->a[p->top];
+        p->top--;
+        return t;
+    }
+}
+void display(struct stack p){
+    int i;
+    if(p.top==-1){
+        printf(" {}\n");
+    }
+    else{
+    for(i=0;i<p.top;i++){
+        printf(" %d",p.a[i]);
+    }
+    printf(" %d",p.a[i]);
+    printf("\n");
+}}
+int main(){
+    struct stack s;
+    int n,choice,t;
+    printf("Enter the maximum size of the stack\n");
+    scanf("%d",&n);
+    initstack(&s,n);
+    do{
+    printf("Choice 1 : Push\nChoice 2 : Pop\nChoice 3 : Display\nAny other choice : Exit\nEnter your choice\n");
+    scanf("%d",&choice);
+    switch(choice){
+        case 1:{
+            printf("Enter the element to be pushed\n");
+            scanf("%d",&t);
+            push(&s,t);
+            break;
+        }
+        case 2:{
+            int nn = pop(&s);
+            if(nn!=(-1000)){
+                printf("The popped element is %d\n",nn);
+            }
+            break;
+        }
+        case 3:{
+            printf("The contents of the stack are");
+            display(s);
+            //printf("\n");
+            break;
+        }
+    }
+    }while(choice<=3 && choice!=0);
+    return 0;
+}
