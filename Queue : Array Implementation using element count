@@ -1,0 +1,80 @@
+Consider implementing a fixed size queue of maximum size 5 using an array.
+
+#include<stdio.h>
+#include<stdlib.h>
+struct queue {
+int contents[5];
+int front;
+int count;
+};
+void initQueue(struct queue *q){
+    q->front = 0;
+    q->count = 0;
+}
+void enQueue(struct queue *q, int element){
+    if(q->count == 5){
+        printf("\nQueue is full");
+    }
+    else{
+        q->contents[(q->count+q->front)%5] = element;
+        q->count++;
+    }
+}
+int deQueue(struct queue * q){
+    if(q->count==0){
+        printf("Queue is empty");
+        return -1000;
+    }
+    else{
+        int t = q->contents[q->front];
+        q->count--;
+        q->front++;
+        q->front = (q->front)%5;
+        return t;
+    }
+}
+void display(struct queue q){
+    //int i;
+    int n = q.count,f=q.front;
+    if(q.count==0){
+        printf(" {}");
+    }
+    else
+        while(n){
+        printf(" %d",q.contents[f]);
+        n--;
+        f++;
+        f = f%5;
+    }
+}
+int main(){
+    struct queue q;int t,c;
+    initQueue(&q);
+do{
+    printf("\nChoice 1 : Enter element into Queue\nChoice 2 : Delete element from Queue\nChoice 3 : Display\nAny other choice : Exit\n");
+    printf("Enter your choice\n");
+    scanf("%d",&c);
+    switch(c){
+        case 1:{
+            printf("Enter the element to be inserted/entered");
+            scanf("%d",&t);
+            enQueue(&q,t);
+            break;
+        }
+        case 2:{
+            int s=deQueue(&q);
+            if(s>=0)
+            printf("The deleted element is %d",s);
+            break;
+        }
+        case 3:{
+            printf("The contents of the queue are");
+            display(q);
+            break;
+        }
+    }
+    
+}while(c<=3);
+    
+    return 0;
+}
