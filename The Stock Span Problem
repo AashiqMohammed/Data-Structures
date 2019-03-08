@@ -1,0 +1,71 @@
+The Stock Span Problem is a financial problem where we have a series of n daily price quotes for a stock and we need to calculate span of stock’s price for all n days.
+The span Si of the stock’s price on a given day i is defined as the maximum number of consecutive days just before the given day, for which the price of the stock on the current day is less than or equal to its price on the given day.
+The Span value of first element is always 1.
+For example, if an array of 7 days prices is given as {100, 80, 60, 70, 60, 75, 85}, then the span values for corresponding 7 days are {1, 1, 1, 2, 1, 4, 6}
+Write a program to calculate stock span values.
+HINT :
+Consider implementing a dynamically sized stack using an array.
+
+#include<stdio.h>
+#include<stdlib.h>
+struct stack{
+    int *a;
+    int top;
+    int maxSize;
+};
+void printSpan(int *span, int n);
+
+void initstack (struct stack *p, int n){
+    p->top =-1;
+    p->maxSize = n;
+} 
+void push(struct stack * p, int item){
+    
+}
+int pop(struct stack * p){
+ return 0;   
+}
+void calculateSpan(int *price, int n, int *span){
+    int i,j,s;
+    for(i=0;i<n;i++){
+        span[i]=1;
+        //printf(" %d ",span[i]);
+    }
+    for(i=0;i<n;i++){
+        for(j=i-1;j>=0;j--){
+            if(price[j]<price[i]){
+                s = span[i];
+                span[i]=s+1;
+            }
+            else{
+                break;
+            }
+        }
+    }
+    
+    
+}
+void printSpan(int *span, int n){
+    int i;
+    
+    for(i=0;i<n;i++){
+        printf("%d ",span[i]);
+    }
+}
+
+int main(){
+    //struct stack *p;
+    //p = (struct stack*)malloc(sizeof(struct stack))
+    int n,i;
+    printf("Enter the number of days");
+    scanf("%d",&n);
+    int span[n],price[n];
+    printf("\nEnter the stock prices");
+    for(i=0;i<n;i++){
+        scanf("%d",&price[i]);
+    }
+    calculateSpan(price,n,span);printf("\nSpan values\n");
+    printSpan(span,n);
+    return 0;
+    
+}
