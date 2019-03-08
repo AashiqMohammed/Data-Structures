@@ -1,0 +1,155 @@
+Write a program to evaluate an expression entered in “postfix” form using stack concept.
+Steps to be followed:
+
+Step:1
+
+create a structure named “postfix”. The structure should contain the following data members:
+
+   stack -an integer array of size 50, for performing stack operations(push and pop).
+   s -a string variable, to get the input infix expression.
+  nn -an integer variable, as a temporary variable, and finally to store the result.
+   top-an integer variable to store the top value of the stack.
+
+Step:2
+
+In the initpostfix function, the data members of the infix structure has to be initialized as follows:
+
+  assign top as '-1'.
+
+Step:3
+
+In the setexpr function, equate the input infix expression to s.
+
+Step:4
+
+In the push function,
+
+ increment top by 1.
+ add the passed integer in the top position.
+
+Step:5
+
+In the pop function,
+
+assign the element in the top position of the stack to an integer variable.
+Decrement top by 1.
+return the integer.
+
+Step:6
+
+In the calculate function,
+
+Start a while loop to parse the input string character by character ( using the condition “ *( p -> s ) ”).
+If digit is encountered, push it to the stack.
+If operator is encountered,
+pop two elements from the stack.
+do the operation according to the operator and store it in a variable.
+Push the variable to the stack.
+
+Step:7
+
+In the show function, print the result.
+
+Step:8
+
+In the main function,
+
+Call the initpostfix function.
+Get the postfix expression to be evaluated.
+Call the setexpr function.
+Then call the calculate function.
+Then display the result by calling the show function.
+End the main function.
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<math.h>
+#include<ctype.h>
+int MAX=50;
+struct postfix
+{
+       int stack[50];
+        int top,nn;
+      char *s;
+};
+    void initpostfix(struct postfix *);
+     void setexpr(struct postfix *, char *str);
+     void push(struct postfix *, int item);
+     int pop(struct postfix *);
+     void calculate(struct postfix *);
+     void show(struct postfix );
+
+int main()
+{
+   char expr[50];
+  printf("Enter postfix expression to be evaluated:\n");
+  scanf("%s",expr);
+   struct postfix p;
+  initpostfix(&p);
+  setexpr(&p,expr);
+  calculate(&p);
+  show(p);
+  return 0;
+}
+void initpostfix(struct postfix *p)
+  {
+    p->top = -1;
+  }
+void setexpr(struct postfix *p, char *str)
+{
+    p->s = (char*)malloc(50*sizeof(char));
+    strcpy(p->s,str);
+    
+}
+void push(struct postfix *p, int item)
+{
+        p->top++;
+        p->stack[p->top] = item;
+        
+}
+int pop(struct postfix *p)
+{
+     int t=p->stack[p->top];
+     p->top--;
+     return t;
+}
+void calculate(struct postfix *p)
+{
+    int a,b;
+    while(*(p->s)){
+        if(*(p->s)-'0'>=0 && *(p->s)-'0'<=9){
+            push(p,*(p->s)-'0');
+        }
+        else {
+            b = pop(p);
+            a = pop(p);
+            switch(*(p->s)){
+                case '+':{
+                    push(p,a+b);
+                    break;
+                }
+                case '-':{
+                    push(p,a-b);
+                    break;
+                }
+                case '*':{
+                    push(p,a*b);
+                    break;
+                }
+                case '/':{
+                    push(p,a/b);
+                    break;
+                }
+            }
+        }
+        (p->s)++;
+    }
+    
+}
+void show(struct postfix p)
+{
+     printf("Result is: %d",pop(&p));
+}
