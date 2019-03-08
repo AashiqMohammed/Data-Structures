@@ -1,0 +1,41 @@
+Corporate Fiesta is the first of its kind Carnival that has a unique blend of sports and arts, catering to varied interest of employees belonging to the Corporate companies of all sizes across the City. The Carnival had many events for different sections of employees.
+
+One notable event is a simple ball passing game called FORWARD and REVERSE organised for the smart Coders in the Corporate. In this event, the coders were given N passes and players having ids between 1 and 1000000. Initially some player with a given id had the ball in his possession. The coders had to make a program to display the id of the player who possessed the ball after exactly N passes.
+
+Description of the passes:
+There were two kinds of passes:
+1. F ID
+2. R
+
+Explanation :
+For the first kind of pass, the player in possession of the ball passes the ball to player with id=ID, while for the second kind of a pass, the player in possession of the ball passes the ball back to the player who had passed the ball to him.
+
+Note:
+It is guaranteed that the given order of all the passes will be a valid order .
+
+#include<stdio.h>
+int main(){
+    int n,prev,ball,i=1,t;
+    char c;
+    scanf("%d %d",&n,&ball);
+    scanf("%c",&c);
+    while(i<=n){
+        scanf("%c",&c);
+        if(c=='F'){
+            prev = ball;
+            scanf("%d",&ball);
+            //printf("\n%d -->%d %d",i,prev,ball);
+            scanf("%c",&c);
+        }
+        else{scanf("%c",&c);
+            t = prev;
+            prev = ball;
+            ball = t;
+            //printf("\n%d %d",prev,ball);
+        }
+        i++;
+    }
+    printf("Player %d",ball);
+    return 0;
+    
+}
